@@ -1,0 +1,24 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Encryption</title>
+  </head>
+  <body>
+    <h1>Image Encryption</h1>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="image" />
+      <button type="submit">Encrypt Image</button>
+    </form>
+    {% if img_data %}
+    <img
+      src="data:image/png;base64,{{ img_data }}"
+      alt="Encrypted Image"
+      width="400px"
+      height="400px"
+    />
+    {% endif %}
+  </body>
+</html>
