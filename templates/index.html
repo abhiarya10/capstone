@@ -1,24 +1,57 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Encryption</title>
+    <style>
+      /* Your CSS styles here */
+      /* Copy the CSS styles from your previous HTML template */
+    </style>
   </head>
   <body>
-    <h1>Image Encryption</h1>
-    <form method="post" enctype="multipart/form-data">
-      <input type="file" name="image" />
-      <button type="submit">Encrypt Image</button>
-    </form>
-    {% if img_data %}
-    <img
-      src="data:image/png;base64,{{ img_data }}"
-      alt="Encrypted Image"
-      width="400px"
-      height="400px"
-    />
-    {% endif %}
+    <div class="main-container">
+      <h1>Image Encryption</h1>
+      <form method="post" enctype="multipart/form-data">
+        <input type="file" name="image" id="image" accept="image/*" required />
+        <br />
+        <button type="submit" name="ecc_button">Encrypt using ECC</button>
+        <button type="submit" name="aes_button">Encrypt using AES</button>
+        <button type="submit" name="ecc_aes_button">
+          Encrypt using ECC + AES
+        </button>
+        <button type="submit" name="decrypt_button">Decrypt</button>
+      </form>
+
+      {% if img_data %}
+      <img
+        src="data:image/png;base64,{{ img_data }}"
+        alt="Encrypted Image"
+        width="260px"
+        height="260px"
+      />
+      <p id="msg">{{ encryption_method }}</p>
+      {% if encryption_time %}
+      <p id="time">Time taken: {{ encryption_time }} seconds</p>
+      {% endif %} {% endif %} {% if decrypted_img_data %}
+      <img
+        src="data:image/png;base64,{{ decrypted_img_data }}"
+        alt="Decrypted Image"
+        width="260px"
+        height="260px"
+      />
+      <p id="decryption_msg">{{ decryption_method }}</p>
+      {% if decryption_time %}
+      <p id="decryption_time">Time taken: {{ decryption_time }} seconds</p>
+      {% endif %}
+      <!-- Add a download button for the decrypted image -->
+      <a
+        href="{{ url_for('download_decrypted_image') }}"
+        download="decrypted_image.png"
+      >
+        <button>Download Decrypted Image</button>
+      </a>
+      {% endif %}
+    </div>
   </body>
 </html>
